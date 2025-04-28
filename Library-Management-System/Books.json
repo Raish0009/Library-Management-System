@@ -1,0 +1,20 @@
+[
+    {
+        "id": 101,
+        "title": "Things Fall Apart",
+        "author": "Chinua Achebe",
+        "category": "noval"
+    },
+    {
+        "id": 102,
+        "title": "Fairy tales",
+        "author": "Hans Christian Andersen",
+        "category": "story"
+    },
+    {
+        "id": 103,
+        "title": "The Divine Comedy",
+        "author": "Dante Alighier",
+        "category": "comedy"
+    }
+]
