@@ -2,8 +2,8 @@ import json
 class Library:
     Books=[]
     BorrowedBook=[]
-    path=rf"F:\indixpert-Python\Library-Management-System\Books.json"
-    path2=rf"F:\indixpert-Python\Library-Management-System\Borrowed-Books.json"
+    path=rf"E:\Library-Management-System\Library-Management-System\Books.json"
+    path2=rf"E:\Library-Management-System\Library-Management-System\Borrowed-Books.json"
     def __init__(self):
         pass
     def menu(self):
@@ -47,11 +47,9 @@ class Library:
         with open(data.path,"r") as file:
             Available=json.load(file)
             print("** Available Books in library **")
-            AvailableData=json.dumps(Available,indent=4)
             print(json.dumps(Available,indent=4))
 
         choice=int(input("Which book you want to borrow :"))
-        # choice=input("Which book you want to borrow :")
 
         for book in Available:
             for key,value in book.items():
@@ -66,24 +64,45 @@ class Library:
 
         data.Books.append(Available)
         
-        for myBook in data.Books:
-            for myBooks in myBook:
-                for key,value in myBooks.items():
-                    if value==choice:
-                        print("mybook :- ",myBooks)
-                        # data.Books.remove(myBooks)
-                        # libraryData=json.dumps(data.Books,indent=4)
-                        # with open(data.path,"w") as file:
-                        #     file.write(libraryData)
+        filtered_data = [d for d in Available if choice not in d.values()]
+
+        libraryData=json.dumps(filtered_data,indent=4)
+        with open(data.path,"w") as file:
+            file.write(libraryData)
 
         print(f"Book borrowed\nBook id : {choice}")
 
         data.menu()
 
     def ReturnBook(self):
-        print("Book returned")
 
+        data=Library()
+        with open(data.path2,"r") as file:
+            Borrowed=json.load(file)
+            print(json.dumps(Borrowed,indent=4))
+        
+        choice=int(input("Which book you want to return :"))
 
+        with open(data.path,"r") as file:
+            AvailableBooks=json.load(file)
+            data.Books=AvailableBooks
+
+        for book in Borrowed:
+            for key,value in book.items():
+                if value==choice:
+                    data.Books.append(book)
+
+        with open(data.path,"w") as file:
+            Books=json.dumps(data.Books,indent=4)
+            file.write(Books)
+
+        filtered_data = [d for d in Borrowed if choice not in d.values()]
+
+        libraryData=json.dumps(filtered_data,indent=4)
+        with open(data.path2,"w") as file:
+            file.write(libraryData)
+
+        data.menu()
 
 data=Library()
 data.menu()
